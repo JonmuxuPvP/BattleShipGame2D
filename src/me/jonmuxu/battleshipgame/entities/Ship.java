@@ -40,6 +40,10 @@ public class Ship {
 	public String getName() {
 		return name;
 	}
+	
+	public char getShipLetter() {
+		return letter;
+	}
 
 	public int getLength() {
 		return length;
@@ -57,9 +61,9 @@ public class Ship {
 		return maxAmmo;
 	}
 
-
 	@Override
 	public String toString() {
 		return "[" + this.name + ", " + this.ammo + "]";
 	}
+
 }

@@ -1,14 +1,23 @@
 package me.jonmuxu.battleshipgame.entities;
 
+import java.util.Random;
+
 public class Point {
 
+	private Random rnd;
 	private int x;
 	private int y;
 	
 	public Point(int x, int y) {
-		super();
+		this.rnd = new Random();
 		this.x = x;
 		this.y = y;
+	}
+	
+	public Point() {
+		this.rnd = new Random();
+		this.x = 0;
+		this.y = 0;
 	}
 	
 	public void setLocation(int x, int y) {
@@ -19,6 +28,11 @@ public class Point {
 	public void translate(int dx, int dy) {
 		x += dx;
 		y += dy;
+	}
+	
+	public void random(int range) {
+		x = rnd.nextInt(range);
+		y = rnd.nextInt(range);
 	}
 
 	public int getX() {

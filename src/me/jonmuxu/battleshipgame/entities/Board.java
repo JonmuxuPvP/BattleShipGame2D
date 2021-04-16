@@ -69,6 +69,21 @@ public class Board {
 		}
 	}
 	
+	@Override
+	public String toString() {
+		String output = "  0 1 2 3 4 5 6 7 8 9\n";
+		int number = 0;
+		for (char[] row : board) {
+			output += number + " ";
+			for (char c : row) {
+				output += c + " ";
+			}
+			output += "\n";
+			number++;
+		}
+		return output;
+	}
+	
 	
 	
 }

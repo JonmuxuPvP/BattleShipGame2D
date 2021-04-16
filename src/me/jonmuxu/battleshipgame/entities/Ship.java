@@ -9,13 +9,13 @@ public class Ship {
 	private int ammo;
 	private int maxAmmo;
 
-	public Ship(String name, char letter, int length, int ammo, int maxAmmo) {
+	public Ship(String name, char letter, int length, int maxAmmo) {
 		super();
 		this.name = name;
 		this.letter = letter;
 		this.length = length;
 		this.health = length;
-		this.ammo = ammo;
+		this.ammo = maxAmmo;
 		this.maxAmmo = maxAmmo;
 	}
 

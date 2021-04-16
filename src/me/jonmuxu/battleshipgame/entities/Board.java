@@ -31,6 +31,8 @@ public class Board {
 	}
 	
 	private boolean checkShip(Ship ship, Point p, int pos) {
+		int x = p.getX();
+		int y = p.getY();
 		p.translate(-1, -1);
 		if (pos == 0 && p.getX() >= board.length - ship.getLength()) {
 			return false;
@@ -50,6 +52,8 @@ public class Board {
 			}
 			increment(p, pos);
 		}
+		p.setX(x);
+		p.setY(y);
 		return true;
 	}
 	

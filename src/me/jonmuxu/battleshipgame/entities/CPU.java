@@ -27,6 +27,10 @@ public class CPU {
 		this.point = new Point();
 		this.targetMode = false;
 		this.AILevel = 0;
+		
+		//testing purposes
+		shipList.add(new Ship("Carrier", 'C', 5, 30));
+		board.placeShips(shipList);
 	}
 	
 	public Board getBoard() {

@@ -14,14 +14,7 @@ public class Game {
 		boardWidth = 10;
 		symbol = '~';
 		CPU c = new CPU("");
-		CPU c1 = new CPU("");
-		CPU c2 = new CPU("");
-		CPU c3 = new CPU("");
-		
 		System.out.println(c.getBoard());
-		System.out.println(c1.getBoard());
-		System.out.println(c2.getBoard());
-		System.out.println(c3.getBoard());
 	}
 	
 }

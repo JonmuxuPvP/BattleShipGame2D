@@ -5,14 +5,16 @@ import java.util.Random;
 
 public class Board {
 
+	private Random rnd;
 	private char[][] board;
 	private char symbol;
-	private Random rnd;
+	private int length;
 	
 	public Board(int width, int height, char symbol) {
+		rnd = new Random();
 		this.board = new char[width][height];
 		this.symbol = symbol;
-		rnd = new Random();
+		this.length = board.length;
 		fillBoard();
 	}
 	
@@ -71,6 +73,14 @@ public class Board {
 				board[i][j] = symbol;
 			}
 		}
+	}
+	
+	public int getLength() {
+		return this.length;
+	}
+	
+	public char[][] getBoard() {
+		return this.board;
 	}
 	
 	@Override

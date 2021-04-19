@@ -18,8 +18,8 @@ public class Game {
 		this.boardHeight = 10;
 		this.boardWidth = 10;
 		this.symbol = '~';
-		entities.add(new CPU("CPU1"));
-		entities.add(new CPU("CPU2"));
+		entities.add(new CPU("CPU1", this));
+		entities.add(new CPU("CPU2", this));
 		matchLoop();
 	}
 	
@@ -42,18 +42,18 @@ public class Game {
 					return;
 				}
 				while (cpu.shoot());
-				displayBoards();
 			}
 			
 		}
 		
 	}
 
+	// debugging purposes
 	public void displayBoards() {
 		for (CPU cpu : entities) {
-			System.out.println(cpu.getBoardObject());
+			System.out.println(cpu.getName() + "\n" + cpu.getShipList() + "\n" + cpu.getBoardObject() + "\n");
 		}
-		try {Thread.sleep(400);} catch (Exception e) {}
+		try {Thread.sleep(200);} catch (Exception e) {}
 		
 	}
 	

@@ -28,19 +28,15 @@ public class Ship {
 			ammo = maxAmmo;
 		}
 	}
-	
-	public boolean shoot() {
-		if (ammo >= maxAmmo) {
-			ammo--;
-			return true;
-		}
-		return false;
+
+	public void shoot() {
+		ammo--;
 	}
 
 	public String getName() {
 		return name;
 	}
-	
+
 	public char getShipLetter() {
 		return letter;
 	}

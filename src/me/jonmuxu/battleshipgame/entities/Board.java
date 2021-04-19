@@ -45,11 +45,11 @@ public class Board {
 		for (int i = 0; i < ship.getLength(); i++) {
 			for (int j = p.getY(); j < p.getY() + 3; j++) {
 				for (int k = p.getX(); k < p.getX() + 3; k++) {
-					try {
+					if (j <= 9 && j >= 0 && k <= 9 && k >= 0) {
 						if (board[j][k] != symbol) {
 							return false;
 						}
-					} catch (IndexOutOfBoundsException e) {}
+					}
 				}
 			}
 			increment(p, pos);

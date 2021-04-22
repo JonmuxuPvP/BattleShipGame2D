@@ -17,17 +17,19 @@ public class CPU {
 	protected Point targetShoot;
 	protected Game game;
 	protected boolean targetMode;
+	protected int balance;
 	protected int AILevel;
 
 	public CPU(String name, Game game) {
 		this.name = name;
-		this.board = new Board(Game.boardWidth, Game.boardHeight, Game.symbol);
+		this.board = new Board(game.getBoardWidth(), game.getBoardHeight(), game.getSymbol());
 		this.shipList = new ArrayList<>();
 		this.targets = new ArrayList<>();
 		this.rnd = new Random();
 		this.point = new Point();
 		this.game = game;
 		this.targetMode = false;
+		this.balance = 3000;
 		this.AILevel = 0;
 
 		// testing purposes
@@ -42,6 +44,8 @@ public class CPU {
 	 * This method returns a boolean for two different cases: Case 1: Returns true
 	 * if the ship was hit Returns false if the ship wasn't hit Case 2: If the ship
 	 * was hit, but the opponent doesn't have any more ships, it returns false
+	 * 
+	 * refactor this one
 	 */
 
 	public boolean shoot() {
@@ -165,7 +169,7 @@ public class CPU {
 	}
 
 	public void setOpponent() {
-		for (CPU cpu : Game.entities) {
+		for (CPU cpu : game.getEntities()) {
 			if (cpu.hashCode() != this.hashCode()) {
 				this.opponent = cpu;
 			}
@@ -195,6 +199,10 @@ public class CPU {
 
 	public Board getBoardObject() {
 		return this.board;
+	}
+
+	public int getBalance() {
+		return balance;
 	}
 
 }

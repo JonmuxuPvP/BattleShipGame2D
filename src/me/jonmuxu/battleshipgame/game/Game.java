@@ -3,24 +3,26 @@ package me.jonmuxu.battleshipgame.game;
 import java.util.ArrayList;
 
 import me.jonmuxu.battleshipgame.entities.CPU;
+import me.jonmuxu.battleshipgame.gui.GameGUI;
 
 public class Game {
 
 	// this should be accessible from anywhere
-	public static ArrayList<CPU> entities;
-	public static int boardWidth;
-	public static int boardHeight;
-	public static char symbol;
+	private GameGUI gui;
+	private ArrayList<CPU> entities;
+	private int boardWidth;
+	private int boardHeight;
+	private char symbol;
 	
 	public Game() {
 		this.entities = new ArrayList<>();
+		this.gui = new GameGUI(this);
 		// test
 		this.boardHeight = 10;
 		this.boardWidth = 10;
 		this.symbol = '~';
-		entities.add(new CPU("CPU1", this));
-		entities.add(new CPU("CPU2", this));
-		matchLoop();
+		//matchLoop();
+		gui.menu();
 	}
 	
 	public void menu() {
@@ -55,6 +57,22 @@ public class Game {
 		}
 		try {Thread.sleep(200);} catch (Exception e) {}
 		
+	}
+
+	public ArrayList<CPU> getEntities() {
+		return entities;
+	}
+
+	public int getBoardWidth() {
+		return boardWidth;
+	}
+
+	public int getBoardHeight() {
+		return boardHeight;
+	}
+
+	public char getSymbol() {
+		return symbol;
 	}
 	
 }

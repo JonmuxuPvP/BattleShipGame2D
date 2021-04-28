@@ -8,13 +8,11 @@ public class Board {
 	private Random rnd;
 	private char[][] board;
 	private char symbol;
-	private int length;
 	
-	public Board(int width, int height, char symbol) {
+	public Board(int size, char symbol) {
 		rnd = new Random();
-		this.board = new char[width][height];
+		this.board = new char[size][size];
 		this.symbol = symbol;
-		this.length = board.length;
 		fillBoard();
 	}
 	
@@ -75,8 +73,8 @@ public class Board {
 		}
 	}
 	
-	public int getLength() {
-		return this.length;
+	public int getSize() {
+		return this.board.length;
 	}
 	
 	public char[][] getBoard() {

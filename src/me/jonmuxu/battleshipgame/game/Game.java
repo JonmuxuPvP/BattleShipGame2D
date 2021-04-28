@@ -7,26 +7,20 @@ import me.jonmuxu.battleshipgame.gui.GameGUI;
 
 public class Game {
 
-	// this should be accessible from anywhere
 	private GameGUI gui;
-	private ArrayList<CPU> entities;
-	private int boardWidth;
-	private int boardHeight;
-	private char symbol;
-	
+	private static ArrayList<CPU> entities;
+
 	public Game() {
-		this.entities = new ArrayList<>();
+		Game.entities = new ArrayList<>();
 		this.gui = new GameGUI(this);
-		// test
-		this.boardHeight = 10;
-		this.boardWidth = 10;
-		this.symbol = '~';
-		//matchLoop();
+		
 		gui.menu();
 	}
 	
-	public void menu() {
-		
+	public void start() {
+		entities.add(new CPU("Marincon"));
+		entities.add(new CPU("yo mismo"));
+		matchLoop();
 	}
 
 	// think about displaying boards after each shot
@@ -35,8 +29,8 @@ public class Game {
 			cpu.getBoardObject().placeShips(cpu.getShipList());
 			cpu.setOpponent();
 		}
-		displayBoards();
-		
+		gui.displayBoards();
+
 		while (true) {
 			for (CPU cpu : entities) {
 				if (cpu.getShipList().isEmpty() || cpu.getTotalAmmo() == 0) {
@@ -45,34 +39,18 @@ public class Game {
 				}
 				while (cpu.shoot());
 			}
-			
+
 		}
-		
+
 	}
 
-	// debugging purposes
-	public void displayBoards() {
-		for (CPU cpu : entities) {
-			System.out.println(cpu.getName() + "\n" + cpu.getShipList() + "\n" + cpu.getBoardObject() + "\n");
-		}
-		try {Thread.sleep(200);} catch (Exception e) {}
-		
-	}
-
-	public ArrayList<CPU> getEntities() {
-		return entities;
-	}
-
-	public int getBoardWidth() {
-		return boardWidth;
-	}
-
-	public int getBoardHeight() {
-		return boardHeight;
-	}
-
-	public char getSymbol() {
-		return symbol;
-	}
 	
+	
+
+	public static ArrayList<CPU> getEntities() {
+		return Game.entities;
+	}
+
+
+
 }

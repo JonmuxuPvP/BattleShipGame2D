@@ -4,6 +4,7 @@ import java.util.Scanner;
 
 import me.jonmuxu.battleshipgame.entities.CPU;
 import me.jonmuxu.battleshipgame.entities.Player;
+import me.jonmuxu.battleshipgame.entities.Shop;
 import me.jonmuxu.battleshipgame.game.Game;
 
 public class GameGUI {
@@ -17,91 +18,79 @@ public class GameGUI {
 	}
 
 	public void menu() {
+		clearScreen();
 		System.out.println("-------------[BattleShipGame2D]-------------");
 		System.out.println("[1] Adventure Mode");
 		System.out.println("[2] Free Play Mode");
 		System.out.println("[3] Settings");
 		System.out.println("[4] Exit");
 		System.out.println("--------------------------------------------");
-
 		int choice = keyboard.nextInt();
-
+		
 		switch (choice) {
-			case 1:
-				break;
-	
 			case 2:
-				freePlayMenu();
+				game.start();
 				break;
-	
-			case 3:
-	
-				break;
-			
-			case 4:
+			default:
+				System.out.println("no");
 				
-				break;
-
 		}
-
-	}
 	
-	private void freePlayMenu() {
+	}
+
+	// TODO xd
+	public void freePlayMenu() {
 		System.out.println("-------------[BattleShipGame2D]-------------");
 		System.out.println("[1] Player vs Player");
 		System.out.println("[2] Player vs CPU");
 		System.out.println("[3] CPU vs CPU");
 		System.out.println("[4] Back");
 		System.out.println("--------------------------------------------");
-		
-		int choice = keyboard.nextInt();
-		
-		switch (choice) {
-			case 1:
-				freePlayPvP();
-				break;
-			
-		}
 	}
 	
-	private void freePlayPvP() {
-		for (int i = 0; i <= 2; i++) {
-			System.out.println("-------------[BattleShipGame2D]-------------");
-			System.out.println("[Select Your Name]");
-			System.out.println("--------------------------------------------");
-			
+	public void freePlayPvP() {
+		for (int i = 0; i < 2; i++) {
+			System.out.println("Your name: ");
 			String name = keyboard.nextLine();
-			CPU c = new CPU(name, this.game);
-			shop(c);
-			game.getEntities().add(c);
+			Player p = new Player(name);
+			Game.getEntities().add(p);
+			shop(p);			
 		}
 	}
 	
-	private void shop(CPU cpu) {
-		String choice = "";
-		while (choice != "Done") {
+	// TODO no va
+	public void shop(Player p) {
+		clearScreen();
+		String choice;
+		do {
 			System.out.println("-------------[BattleShipGame2D]-------------");
-			System.out.println("Buy your Ships | Type \"Done\" when you are done");
-			System.out.println("[1] Carrier - 750$");
-			System.out.println("[2] BattleShip - 1000$");
-			System.out.println("[3] Cruiser - 2200$");
-			System.out.println("[4] Submarine - 2500$");
-			System.out.println("[5] Destroyer - 3000$");
-			System.out.println("\nYour Money: " + cpu.getBalance() + "$");
+			for (int i = 0; i < Shop.getShipList().length; i++) {
+				System.out.println("[" + (i + 1) + "] " + Shop.getShipList()[i].getName() + " - " 
+			                       + Shop.getShipList()[i].getPrice() + "$");
+			}
+			System.out.println("Balance: " + p.getBalance());
 			System.out.println("--------------------------------------------");
-			choice = keyboard.next();
+			choice = keyboard.nextLine();
+			Shop.buyShip(p, choice);
+		} while (choice != "Done");
+	}
+	
+
+	public static void displayBoards() {
+		for (CPU cpu : Game.getEntities()) {
+			System.out.println(cpu.getName() + "\n" + cpu.getShipList() + "\n" + cpu.getBoardObject() + "\n");
 		}
+		try {Thread.sleep(100);} catch (Exception e) {}
+		clearScreen();
+	}
+	
+	private static void clearScreen() {
+		try {
+            new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
+        } catch (Exception e) {}
 	}
 
 	public void settings() {
-
-	}
-
-	public void adventureMode() {
-
-	}
-
-	public void freePlay() {
 
 	}
 

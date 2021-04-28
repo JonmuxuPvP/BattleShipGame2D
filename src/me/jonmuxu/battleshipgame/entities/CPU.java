@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import me.jonmuxu.battleshipgame.game.Game;
+import me.jonmuxu.battleshipgame.game.GameManager;
+import me.jonmuxu.battleshipgame.gui.GameGUI;
 
 public class CPU {
 
@@ -15,29 +17,29 @@ public class CPU {
 	protected Point point;
 	protected CPU opponent;
 	protected Point targetShoot;
-	protected Game game;
 	protected boolean targetMode;
-	protected int balance;
+	// remove later
 	protected int AILevel;
 
-	public CPU(String name, Game game) {
+	public CPU(String name) {
 		this.name = name;
-		this.board = new Board(game.getBoardWidth(), game.getBoardHeight(), game.getSymbol());
+		this.board = new Board(GameManager.getBoardSize(), GameManager.getSymbol());
 		this.shipList = new ArrayList<>();
 		this.targets = new ArrayList<>();
 		this.rnd = new Random();
 		this.point = new Point();
-		this.game = game;
 		this.targetMode = false;
-		this.balance = 3000;
-		this.AILevel = 0;
+		
+		// remove later
+		this.AILevel = 1;
 
 		// testing purposes
-		shipList.add(new Ship("Carrier", 'C', 5, 30));
-		/*shipList.add(new Ship("BattleShip", 'B', 4, 30));
-		shipList.add(new Ship("Submarine", 'S', 3, 30));
-		shipList.add(new Ship("Cruiser", 'R', 3, 30));
-		shipList.add(new Ship("Destroyer", 'D', 2, 30));*/
+		shipList.add(new Ship("Carrier", 'C', 5, 30, 750));
+		shipList.add(new Ship("Carrier", 'C', 5, 20, 750));
+		shipList.add(new Ship("BattleShip",'B', 4, 30, 1000));
+		shipList.add(new Ship("Cruiser", 'R', 4, 40, 2200));
+		shipList.add(new Ship("Submarine",'S', 3, 40, 2500));
+		shipList.add(new Ship("Destroyer", 'D', 2, 60, 3000));
 	}
 
 	/*
@@ -119,7 +121,7 @@ public class CPU {
 			break;
 
 		}
-		game.displayBoards();
+		GameGUI.displayBoards();
 		return hit;
 
 	}
@@ -127,13 +129,13 @@ public class CPU {
 	private void randomShot() {
 		if (AILevel == 2) {
 			do {
-				this.point.random(this.board.getLength());
+				this.point.random(this.board.getSize());
 			} while (opponent.getBoard()[point.getY()][point.getX()] == 'o'
 					|| opponent.getBoard()[point.getY()][point.getX()] == 'x'
 					|| (point.getY() + point.getX()) % 2 == 0);
 		} else {
 			do {
-				this.point.random(this.board.getLength());
+				this.point.random(this.board.getSize());
 			} while (opponent.getBoard()[point.getY()][point.getX()] == 'o'
 					|| opponent.getBoard()[point.getY()][point.getX()] == 'x');
 		}
@@ -169,7 +171,7 @@ public class CPU {
 	}
 
 	public void setOpponent() {
-		for (CPU cpu : game.getEntities()) {
+		for (CPU cpu : Game.getEntities()) {
 			if (cpu.hashCode() != this.hashCode()) {
 				this.opponent = cpu;
 			}
@@ -200,9 +202,4 @@ public class CPU {
 	public Board getBoardObject() {
 		return this.board;
 	}
-
-	public int getBalance() {
-		return balance;
-	}
-
 }

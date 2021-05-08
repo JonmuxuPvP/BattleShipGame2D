@@ -9,44 +9,41 @@ public class Game {
 
 	private GameGUI gui;
 	private static ArrayList<CPU> entities;
+	private int level;
 
 	public Game() {
 		Game.entities = new ArrayList<>();
 		this.gui = new GameGUI(this);
-		
-		gui.menu();
+		this.level = gui.level();
+		gui.speed();
+		start();
 	}
 	
 	public void start() {
-		entities.add(new CPU("Marincon"));
-		entities.add(new CPU("yo mismo"));
+		entities.add(new CPU("CPU 1", level));
+		entities.add(new CPU("CPU 2", level));
 		matchLoop();
 	}
 
-	// think about displaying boards after each shot
 	public void matchLoop() {
 		for (CPU cpu : entities) {
 			cpu.getBoardObject().placeShips(cpu.getShipList());
 			cpu.setOpponent();
 		}
-		gui.displayBoards();
-
 		while (true) {
 			for (CPU cpu : entities) {
-				if (cpu.getShipList().isEmpty() || cpu.getTotalAmmo() == 0) {
-					System.out.println(cpu.getOpponent().getName() + " wins!");
+				if (cpu.getShipList().isEmpty()) {
+					gui.displayBoards();
+					System.out.println("---------\n" + cpu.getOpponent().getName() + " wins!\n---------");
 					return;
 				}
-				while (cpu.shoot());
+				do {
+					gui.displayBoards();
+				} while (cpu.shoot());
 			}
 
 		}
-
 	}
-
-	
-	
-
 	public static ArrayList<CPU> getEntities() {
 		return Game.entities;
 	}

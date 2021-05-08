@@ -4,77 +4,67 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import me.jonmuxu.battleshipgame.game.Game;
-import me.jonmuxu.battleshipgame.game.GameManager;
-import me.jonmuxu.battleshipgame.gui.GameGUI;
 
 public class CPU {
 
-	protected String name;
-	protected Board board;
-	protected ArrayList<Ship> shipList;
-	protected ArrayList<Point> targets;
-	protected Random rnd;
-	protected Point point;
-	protected CPU opponent;
-	protected Point targetShoot;
-	protected boolean targetMode;
-	// remove later
-	protected int AILevel;
+	private String name;
+	private Board board;
+	private ArrayList<Ship> shipList;
+	private ArrayList<Point> targets;
+	private Random rnd;
+	private Point point;
+	private CPU opponent;
+	private Point targetShoot;
+	private boolean targetMode;
+	private int AILevel;
 
-	public CPU(String name) {
+	public CPU(String name, int AILevel) {
 		this.name = name;
-		this.board = new Board(GameManager.getBoardSize(), GameManager.getSymbol());
+		this.board = new Board(10, '~');
 		this.shipList = new ArrayList<>();
 		this.targets = new ArrayList<>();
 		this.rnd = new Random();
 		this.point = new Point();
 		this.targetMode = false;
-		
-		// remove later
-		this.AILevel = 1;
+		this.AILevel = AILevel;
 
-		// testing purposes
-		shipList.add(new Ship("Carrier", 'C', 5, 30, 750));
-		shipList.add(new Ship("Carrier", 'C', 5, 20, 750));
-		shipList.add(new Ship("BattleShip",'B', 4, 30, 1000));
-		shipList.add(new Ship("Cruiser", 'R', 4, 40, 2200));
-		shipList.add(new Ship("Submarine",'S', 3, 40, 2500));
-		shipList.add(new Ship("Destroyer", 'D', 2, 60, 3000));
+		shipList.add(new Ship("Carrier", 'C', 5));
+		shipList.add(new Ship("BattleShip", 'B', 4));
+		shipList.add(new Ship("Cruiser", 'R', 4));
+		shipList.add(new Ship("Submarine", 'S', 3));
+		shipList.add(new Ship("Destroyer", 'D', 2));
 	}
 
 	/*
-	 * This method returns a boolean for two different cases: Case 1: Returns true
-	 * if the ship was hit Returns false if the ship wasn't hit Case 2: If the ship
-	 * was hit, but the opponent doesn't have any more ships, it returns false
-	 * 
-	 * refactor this one
+	 * This method returns a boolean for two different cases: 
+	 * Case 1: Returns true if the ship was hit or Returns false if the ship wasn't hit 
+	 * Case 2: If the ship was hit, but the opponent doesn't have any more ships, it returns false
+	 *
 	 */
-
 	public boolean shoot() {
-		boolean hit = false;
-		randomCannonball();
-
-		// Change switch for an if/else statement while refactoring
-		switch (AILevel) {
-		case 0:
+		if (AILevel == 1) {
 			randomShot();
 			if (checkShip(this.point)) {
-				opponent.getBoard()[point.getY()][point.getX()] = 'x';
-				hit = true;
-			} else {
-				opponent.getBoard()[point.getY()][point.getX()] = 'o';
+				return true;
 			}
-			break;
-
-		case 1:
-		case 2:
-			if (targetMode) {
-				targets.removeIf(p -> p.getX() < 0 || p.getX() > 9 || 
-                        p.getY() < 0 || p.getY() > 9 ||
-                        opponent.getBoard()[p.getY()][p.getX()] == 'o');
+			return false;
+		} else {
+			if (!targetMode) {
+				randomShot();
+				if (checkShip(this.point)) {
+					targets.add(new Point(point.getX() - 1, point.getY()));
+					targets.add(new Point(point.getX(), point.getY() - 1));
+					targets.add(new Point(point.getX() + 1, point.getY()));
+					targets.add(new Point(point.getX(), point.getY() + 1));
+					targetMode = true;
+					return true;
+				}
+				return false;
+			} else {
+				targets.removeIf(p -> p.getX() < 0 || p.getX() > 9 || p.getY() < 0 || p.getY() > 9
+						|| opponent.getBoard()[p.getY()][p.getX()] == 'o');
 				targetShoot = targets.get(rnd.nextInt(targets.size()));
 				if (checkShip(this.targetShoot)) {
-					opponent.getBoard()[this.targetShoot.getY()][this.targetShoot.getX()] = 'x';
 					if (point.getX() == targetShoot.getX()) {
 						targets.removeIf(p -> p.getX() != point.getX());
 						if (targetShoot.getY() < point.getY()) {
@@ -91,43 +81,20 @@ public class CPU {
 						}
 					}
 					if (opponent.getShipList().isEmpty()) {
-						hit = false;
-						break;
+						return false;
 					} else {
-						hit = true;
-						break;
+						return true;
 					}
 				} else {
-					opponent.getBoard()[this.targetShoot.getY()][this.targetShoot.getX()] = 'o';
 					targets.remove(targetShoot);
-					hit = false;
-					break;
-				}
-			} else {
-				randomShot();
-				if (checkShip(this.point)) {
-					targets.add(new Point(point.getX() - 1, point.getY()));
-					targets.add(new Point(point.getX(), point.getY() - 1));
-					targets.add(new Point(point.getX() + 1, point.getY()));
-					targets.add(new Point(point.getX(), point.getY() + 1));
-					targetMode = true;
-					opponent.getBoard()[this.point.getY()][this.point.getX()] = 'x';
-					hit = true;
-					break;
+					return false;
 				}
 			}
-			opponent.getBoard()[this.point.getY()][this.point.getX()] = 'o';
-			hit = false;
-			break;
-
 		}
-		GameGUI.displayBoards();
-		return hit;
-
 	}
 
 	private void randomShot() {
-		if (AILevel == 2) {
+		if (AILevel == 3) {
 			do {
 				this.point.random(this.board.getSize());
 			} while (opponent.getBoard()[point.getY()][point.getX()] == 'o'
@@ -139,22 +106,14 @@ public class CPU {
 			} while (opponent.getBoard()[point.getY()][point.getX()] == 'o'
 					|| opponent.getBoard()[point.getY()][point.getX()] == 'x');
 		}
-		
-	}
 
-	private void randomCannonball() {
-		for (Ship ship : shipList) {
-			if (ship.getAmmo() > 0) {
-				ship.shoot();
-				return;
-			}
-		}
 	}
 
 	private boolean checkShip(Point p) {
 		for (Ship ship : opponent.shipList) {
 			if (opponent.getBoard()[p.getY()][p.getX()] == ship.getShipLetter()) {
 				ship.hit();
+				opponent.getBoard()[p.getY()][p.getX()] = 'x';
 				if (ship.getHealth() == 0) {
 					this.targetMode = false;
 					this.targets.clear();
@@ -163,6 +122,7 @@ public class CPU {
 				return true;
 			}
 		}
+		opponent.getBoard()[p.getY()][p.getX()] = 'o';
 		return false;
 	}
 
@@ -178,21 +138,20 @@ public class CPU {
 		}
 	}
 
-	public int getTotalAmmo() {
-		int count = 0;
-		for (Ship ship : shipList) {
-			count += ship.getAmmo();
-		}
-		return count;
-
-	}
-
 	public String getName() {
 		return this.name;
 	}
 
 	public ArrayList<Ship> getShipList() {
 		return this.shipList;
+	}
+	
+	public ArrayList<Point> getTargets() {
+		return targets;
+	}
+	
+	public Point getPoint() {
+		return point;
 	}
 
 	public char[][] getBoard() {

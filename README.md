@@ -11,6 +11,12 @@ When you first open up the game, you will find three AI levels. Here is what the
 
 For reference if it wasn't clear enough, I recommend you check out this webpage: https://www.datagenetics.com/blog/december32011/
 
+## Game Speed
+For reference, here is the speed the console will be cleared at depending on the mode you selected
+* Slow: 400 milliseconds
+* Medium: 250 milliseconds
+* Fast: 100 milliseconds
+
 ## Running the Game
 In order to play the game, you need to open up cmd or terminal depending on your OS and execute the jar file with the following command:
 ```

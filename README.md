@@ -9,7 +9,7 @@ When you first open up the game, you will find three AI levels. Here is what the
 * Level 2: Also shoots randomly across the board, but upon hitting a ship, it will define four possible targets, shooting and discarding depending if the ship was hit or not.
 * Level 3: Randomly shoots using the parity pattern, or more like a checker board pattern (imagine a chess board, meaning it will only fire on black or white tiles). Since every ship has a minimum length of two, we discard fifty possible spots, thus making it more efficient to find ships.
 
-For reference if it wasn't clear enough, I recommend you check out this webpage: https://www.datagenetics.com/blog/december32011/
+In case it wasn't clear enough, I recommend you check out this webpage: https://www.datagenetics.com/blog/december32011/
 
 ## Game Speed
 For reference, here is the speed the console will be cleared at depending on the mode you selected

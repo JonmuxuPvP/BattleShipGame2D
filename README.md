@@ -20,6 +20,7 @@ For reference, here is the speed the console will be cleared at depending on the
 ## Running the Game
 In order to play the game, you first need to make sure Java is installed in your computer. Then, open up your cmd or terminal depending on your Operating System and execute the jar file with the following command:
 ```
-java -jar [path].jar
+java -jar [path]
 ```
+Where [path] is either the relative or absolute path of your jar file. Ex: C:\Users\MyPC\Desktop\BattleShipGame2D.jar
 This is the only way the game can be executed for now since there is no Graphical User Interface. Enjoy testing the demo and let me know if you encounter a bug!

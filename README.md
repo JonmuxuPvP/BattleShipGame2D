@@ -22,5 +22,5 @@ In order to play the game, you first need to make sure Java is installed in your
 ```
 java -jar [path]
 ```
-Where [path] is either the relative or absolute path of your jar file. Ex: C:\Users\MyPC\Desktop\BattleShipGame2D.jar
+Where [path] is either the relative or absolute path of your jar file. Ex: C:\Users\MyPC\Desktop\BattleShipGame2D.jar.
 This is the only way the game can be executed for now since there is no Graphical User Interface. Enjoy testing the demo and let me know if you encounter a bug!

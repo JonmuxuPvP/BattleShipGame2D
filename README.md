@@ -18,7 +18,7 @@ For reference, here is the speed the console will be cleared at depending on the
 * Fast: 100 milliseconds
 
 ## Running the Game
-In order to play the game, you need to open up cmd or terminal depending on your OS and execute the jar file with the following command:
+In order to play the game, you first need to make sure Java is installed in your computer. Then, open up your cmd or terminal depending on your Operating System and execute the jar file with the following command:
 ```
 java -jar [path].jar
 ```
